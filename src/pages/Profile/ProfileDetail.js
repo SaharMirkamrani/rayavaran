@@ -4,12 +4,13 @@ const useStyles = makeStyles(() => ({
   info: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
+    alignItems: 'center',
     margin: '100px 20px 30px',
   },
 }));
 
-const ProfileDetail = ({ userDetail, loading }) => {
+const ProfileDetail = ({ userDetail, loading, repos }) => {
   const {
     name,
     login,
@@ -17,27 +18,51 @@ const ProfileDetail = ({ userDetail, loading }) => {
     followers,
     avatar_url,
     email,
-		location,
+    location,
     bio,
   } = userDetail;
   const classes = useStyles();
   return (
-		<div>
+    <div>
       <Box className={classes.info}>
-        <img src={avatar_url} alt="profile" style={{ height: '150px' }} />
-        <Box>
-          <Typography variant="h5">Name: {name} </Typography>
+        {!loading ? (
+          <img
+            src={avatar_url}
+            alt="profile"
+            style={{ height: '150px', marginRight: '50px' }}
+          />
+        ) : (
+          <h2 style={{ textAlign: 'center' }}>...</h2>
+        )}
+        <Box style={{ marginLeft: '50px' }}>
+          {name && <Typography variant="h5">Name: {name} </Typography>}
           <Typography variant="h5">Username: {login} </Typography>
           <Typography variant="h5">Followers: {followers}</Typography>
           <Typography variant="h5">Followings: {following}</Typography>
-					<Typography variant="h5">Location: {location}</Typography>
+          {location && (
+            <Typography variant="h5">Location: {location}</Typography>
+          )}
           {email && <Typography variant="h5">Email: {email}</Typography>}
+          {bio && <Typography variant="h5">Bio: {bio}</Typography>}
         </Box>
       </Box>
-      {bio && (
-        <Typography variant="h5" style={{ textAlign: 'center' }}>
-          Bio: {bio}
-        </Typography>
+
+      <Typography variant="h5" style={{ textAlign: 'center' }}>
+        Repositories:
+      </Typography>
+      {!loading ? (
+        <Box style={{ textAlign: 'center' }}>
+          {repos &&
+            repos.map((repo) => (
+              <li style={{ listStyleType: 'none' }} key={repo.id}>
+                <Typography variant="body2">
+                  {repo.full_name.split('/')[1]}
+                </Typography>
+              </li>
+            ))}
+        </Box>
+      ) : (
+        <h2 style={{ textAlign: 'center' }}>...</h2>
       )}
     </div>
   );
