@@ -47,9 +47,11 @@ const ProfileDetail = ({ userDetail, loading, repos }) => {
         </Box>
       </Box>
 
-      <Typography variant="h5" style={{ textAlign: 'center' }}>
-        Repositories:
-      </Typography>
+      {repos.length === 0 ? null : (
+        <Typography variant="h5" style={{ textAlign: 'center' }}>
+          Repositories:
+        </Typography>
+      )}
       {!loading ? (
         <Box style={{ textAlign: 'center' }}>
           {repos &&
