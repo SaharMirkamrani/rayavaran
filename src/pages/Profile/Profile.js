@@ -8,8 +8,8 @@ const url = `https://api.github.com/users`;
 const Profile = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [userDetail, setUserDetail] = useState({});
-  const [repos, setRepos] = useState([])
-  const history = useHistory()
+  const [repos, setRepos] = useState([]);
+  const history = useHistory();
   const { username } = useParams();
 
   const getProfile = () => {
@@ -19,7 +19,21 @@ const Profile = () => {
       .then((res) => {
         setUserDetail(res.data);
         setIsLoading(false);
-        console.log(res.data)
+        getRepos();
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        history.push('/Error');
+      });
+  };
+
+  const getRepos = () => {
+    setIsLoading(true);
+    axios
+      .get(`${url}/${username}/repos`)
+      .then((res) => {
+        setRepos(res.data);
+        setIsLoading(false);
       })
       .catch((err) => {
         console.log(err);
@@ -27,29 +41,17 @@ const Profile = () => {
       });
   };
 
-  const getRepos = ()=> {
-    setIsLoading(true);
-    axios
-      .get(`${url}/${username}/repos`)
-      .then((res) => {
-        setRepos(res.data)
-        setIsLoading(false);
-        console.log(res.data)
-      })
-      .catch((err) => {
-        console.log(err);
-        setIsLoading(false);
-      });
-  }
-
   useEffect(() => {
     getProfile();
-    getRepos();
   }, []);
 
   return (
     <>
-      <ProfileDetail userDetail={userDetail} loading={isLoading} repos={repos} />
+      <ProfileDetail
+        userDetail={userDetail}
+        loading={isLoading}
+        repos={repos}
+      />
     </>
   );
 };
