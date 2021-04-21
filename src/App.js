@@ -6,17 +6,17 @@ import NotFound from './pages/Error';
 function App() {
   return (
     <Router>
-        <Switch>
-          <Route path="/profile/:username">
-            <Profile />
-          </Route>
-          <Route exact path="/">
-            <Home />
-          </Route>
-          <Route exact path="*">
-            <NotFound />
-          </Route>
-        </Switch>
+      <Switch>
+        <Route path="/profile/:username">
+          <Profile />
+        </Route>
+        <Route exact path="/">
+          <Home />
+        </Route>
+        <Route exact path="*">
+          <NotFound />
+        </Route>
+      </Switch>
     </Router>
   );
 }

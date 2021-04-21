@@ -1,9 +1,8 @@
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import { Button, Box } from '@material-ui/core';
-import { useState,} from 'react';
+import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -18,11 +17,11 @@ export default function Search() {
   const classes = useStyles();
   const [search, setSearch] = useState('');
 
-	const history = useHistory();
+  const history = useHistory();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-		history.push(`/profile/${search}`);
+    history.push(`/profile/${search}`);
   };
 
   return (
@@ -42,7 +41,7 @@ export default function Search() {
           variant="contained"
           color="secondary"
           type="submit"
-					onSubmit={(e) => handleSubmit(e)}
+          onSubmit={(e) => handleSubmit(e)}
         >
           Submit
         </Button>
